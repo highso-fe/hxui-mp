@@ -1,0 +1,66 @@
+<style type="less">
+  .modalWrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+  }
+  .modalContent {
+    position: relative;
+    align-self: center;
+    margin: 0 auto;
+    background: #fff;
+    box-shadow: 0 4rpx 8rpx 0 rgba(0,0,0,0.50);
+    border-radius: 8rpx;
+    text-align: center;
+  }
+</style>
+
+<template>
+  <view class="modalWrapper" @tap="handleOutterClose" wx:if="{{modalShow}}">
+    <view class="modalContent" style="{{contentStyle}}">
+      <slot name="content"></slot>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class Modal extends wepy.component {
+    props = {
+      contentStyle: {
+        type: String,
+        default: 'width:560rpx;',
+      },
+      outterClose: {
+        type: String,
+        default: 'true',
+      },
+    }
+
+    data = {
+      modalShow: false,
+    }
+
+    methods = {
+      handleOpen() {
+        this.modalShow = true
+      },
+
+      handleClose() {
+        this.modalShow = false
+      },
+
+      handleOutterClose() {
+        if (this.outterClose === 'true') {
+          this.modalShow = false
+        }
+      },
+    }
+  }
+</script>

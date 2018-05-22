@@ -1,0 +1,54 @@
+<style type="less">
+  .btn {
+    padding: 0;
+    border: none;
+    width: 100%;
+    height: 80rpx;
+    background: #007aff;
+    border-radius: 8rpx;
+    line-height: 80rpx;
+    text-align: center;
+    color: #fff;
+    font-size: 30rpx;
+
+    &::after {
+      display: none;
+    }
+  }
+</style>
+
+<template>
+  <button class="btn" style="{{customStyle}}" @tap="handleTap">
+    <slot name="content"></slot>
+  </button>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class Modal extends wepy.component {
+    props = {
+      customStyle: {
+        type: String,
+        default: '',
+      },
+      eventName: {
+        type: String,
+        default: '',
+      }
+    }
+
+    data = {
+
+    }
+
+    methods = {
+      handleTap(e) {
+        if (this.eventName) {
+          console.log(`component btn click，event name: ${this.eventName}`)
+          this.$emit(this.eventName, e)
+        }
+      },
+    }
+  }
+</script>

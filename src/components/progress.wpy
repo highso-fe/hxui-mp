@@ -1,0 +1,137 @@
+<style lang="less">
+/** less **/
+.circleProgress_wrapper {
+  display: inline-block;
+  width: 72rpx;
+  height: 72rpx;
+  position: relative;
+  transform: rotate(-90deg);
+}
+.progress_num {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  text-align: center;
+  margin: 0 auto;
+  font-size: 24rpx;
+  color: #666;
+  text-align: center;
+  transform: translateY(-50%) rotate(90deg);
+}
+.progress_symbol {
+  font-size: 18rpx;
+  color: #2a2a2a;
+  text-align: center;
+}
+.wrapper {
+  width: 36rpx;
+  height: 72rpx;
+  position: absolute;
+  top: 0;
+  overflow: hidden;
+}
+.right {
+  right: 0;
+}
+.left {
+  left: 0;
+}
+.circleProgress {
+  box-sizing: border-box;
+  width: 72rpx;
+  height: 72rpx;
+  border: 4rpx solid #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+}
+.rightcircle {
+  border-top: 4rpx solid #007aff;
+  border-right: 4rpx solid #007aff;
+  border-left: 4rpx solid #c8c8d3;
+  border-bottom: 4rpx solid #c8c8d3;
+  right: 0;
+  transform: rotate(-135deg);
+  transition: 1s;
+}
+.leftcircle {
+  border-bottom: 4rpx solid #007aff;
+  border-left: 4rpx solid #007aff;
+  border-top: 4rpx solid #c8c8d3;
+  border-right: 4rpx solid #c8c8d3;
+  left: 0;
+  transform: rotate(-135deg);
+  transition: 1s;
+  transition-delay: 1s;
+}
+</style>
+
+<template lang="wxml">
+  <view class="circleProgress_wrapper">
+    <view class="wrapper right">
+        <!-- <view class="circleProgress rightcircle" animation="{{animationRight}}"></view>   -->
+        <view
+        class="circleProgress rightcircle"
+        style="transform: rotate({{progress.percent >= 50 ? 45 : progress.percent * 3.6 - 135}}deg)"
+        >
+        </view>
+    </view>
+    <view class="wrapper left">
+        <!-- <view class="circleProgress leftcircle" animation="{{animationLeft}}"></view>   -->
+        <view
+        class="circleProgress leftcircle"
+        style="transform: rotate({{progress.percent > 50 ? (progress.percent - 50) * 3.6 - 135 : -135}}deg)"
+        >
+        </view>
+    </view>
+    <view class="progress_num">{{progress.percent}}<text class="progress_symbol">%</text></view>
+  </view>
+</template>
+
+<script>
+/**
+ * @params
+ *  progress: <String>
+ *  active: <String>
+ */
+import wepy from 'wepy'
+export default class Progress extends wepy.component {
+  props = {
+    progress: Object,
+    // active: String
+  };
+  components = {};
+
+  data = {
+    // animationRight: {},
+    // animationLeft: {}
+  };
+  methods = {};
+
+  events = {};
+
+  onLoad() {
+    // const progress = this.data.progress.progress || this.data.progress;
+    // // console.log(progress);
+    // console.log(this)
+    // const active = this.data.active !== undefined;
+    // const animationRight = wx.createAnimation({
+    //   duration: active ? 300 : 0,
+    //   timingFunction: 'linear',
+    //   delay: 0
+    // });
+    // const animationLeft = wx.createAnimation({
+    //   duration: active ? 300 : 0,
+    //   timingFunction: 'linear',
+    //   delay: active ? 300 : 0
+    // });
+    // animationRight.rotate(progress >= 50 ? 45 : progress * 3.6 - 135).step();
+    // animationLeft
+    //   .rotate(progress > 50 ? (progress - 50) * 3.6 - 135 : 45)
+    //   .step();
+    // this.animationRight = animationRight.export();
+    // this.animationLeft = animationLeft.export();
+  }
+  // Other properties
+}
+</script>

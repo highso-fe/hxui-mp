@@ -1,0 +1,131 @@
+<style lang="less">
+  .buttonWrapper {
+    display: flex;
+    flex-flow: row wrap;
+    align-content: space-around;
+    width: 600rpx;
+    height: 600rpx;
+  }
+  .modalContent {
+    width: 100%;
+    height: 200rpx;
+    line-height: 200rpx;
+  }
+</style>
+<template>
+  <view class="container">
+
+    <view style="margin-top:50rpx;">
+      <!-- repeat 用于动态传值 -->
+      <repeat>
+        <progress :progress="progress" />
+      </repeat>
+    </view>
+
+    <view class="buttonWrapper">
+      <progressButton>
+        <view slot="content" @tap="handleTestProgress">test progress</view>
+      </progressButton>
+
+      <modalButton>
+        <view slot="content" @tap="handleTestModal">test modal</view>
+      </modalButton>
+
+      <loadingButton eventName="testLoading">
+        <view slot="content">test loading</view>
+      </loadingButton>
+    </view>
+
+    <customModal outterClose="true">
+      <view slot="content" class="modalContent">content</view>
+    </customModal>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import { getStore } from 'wepy-redux'
+
+import Modal from '../components/modal'
+import Button from '../components/button'
+import Progress from '../components/progress'
+
+import { customRequest } from '../utils/request'
+import { watchRouteChange } from '../router'
+import { showLoading, hideLoading } from '../utils/util'
+import WX_SHARE_CARD_CONF from '../config/wxShareCardConf'
+
+const store = getStore()
+
+export default class Index extends wepy.page {
+  config = {
+
+  }
+
+  components = {
+    /**
+     * 1. 组件不要与自有标签重名
+     * 2. 组件之间不要重名
+     * 3. 循环组件动态传值使用 repeat 标签
+     * 4. 循环嵌套的组件不要使用状态，由 props 控制
+     */
+    customModal: Modal,
+    modalButton: Button,
+    progressButton: Button,
+    loadingButton: Button,
+    progress: Progress,
+  }
+
+  mixins = [
+
+  ]
+
+  data = {
+    progress: {
+      percent: Math.random().toFixed(2) * 100,
+    },
+  }
+
+  computed = {
+
+  }
+
+  watch = {
+
+  }
+
+  methods = {
+    handleTestModal() {
+      this.$invoke('customModal', 'handleOpen')
+    },
+    handleTestProgress() {
+      this.progress.percent = Math.random().toFixed(2) * 100
+    },
+  }
+
+  events = {
+    testLoading() {
+      console.log('show loading')
+      showLoading()
+
+      setTimeout(() => {
+        console.log('hide loading')
+        hideLoading()
+      }, 1000)
+    },
+  }
+
+  onLoad() {
+    console.log('test redux: ', store)
+  }
+
+  onShow() {
+    // 监听自定义路由变化
+    watchRouteChange(this)
+  }
+
+  onShareAppMessage() {
+    return WX_SHARE_CARD_CONF
+  }
+}
+</script>
